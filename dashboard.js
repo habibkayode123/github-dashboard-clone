@@ -142,28 +142,15 @@ serchInput.addEventListener("blur", (e) => {
   headerLabel.style.borderColor = "#444d56";
 });
 
-let query = {
-  query:
-    "query {organization(login: facebook){name,url,repositories (first:3) {pageInfo {hasNextPage,endCursor},nodes {name}}}}",
-};
-
 let query3 = {
   query:
     "query{viewer{name,login,avatarUrl,followers{totalCount},following{totalCount}repositories(first: 20, orderBy: {field: NAME, direction: ASC}) {nodes {stargazerCount,description,name,url,isPrivate,createdAt,updatedAt,licenseInfo {name},owner {login},defaultBranchRef {name}languages(first: 10) {nodes {name,color}}}}}}",
 };
 let url = "https://api.github.com/graphql";
-let query2 = {
-  variables: {
-    organization: "facebook",
-    count: 3,
-  },
-  query:
-    "query ($organization: String!, $count:Int!){organization(login: $organization) {name,url,repositories(first: $count) {pageInfo {hasNextPage,endCursor},nodes {name}}}}",
-};
 fetch(url, {
   method: "POST",
   headers: {
-    Authorization: "Bearer 061198fbc76da525ec47856c5ad94e18c64c2585",
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
     "Content-Type": "application/json",
   },
 
